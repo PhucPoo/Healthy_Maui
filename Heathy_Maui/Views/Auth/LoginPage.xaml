@@ -1,0 +1,142 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:HealthManagement_MAUI.Features.Auth"
+             x:Class="HealthManagement_MAUI.Features.Auth.LoginPage"
+             Shell.NavBarIsVisible="False">
+
+    <!-- Nền gradient nhẹ -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#E8F0FE" Offset="0.0"/>
+            <GradientStop Color="#FFFFFF" Offset="0.5"/>
+            <GradientStop Color="#F0F4FF" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid RowDefinitions="*,Auto,*" Padding="30">
+
+        <!-- Form đăng nhập -->
+        <Border Grid.Row="1"
+                StrokeThickness="0"
+                BackgroundColor="White"
+                Padding="30,40"
+                Shadow="{Shadow Brush=Gray, Offset='0,4', Radius=15, Opacity=0.15}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20"/>
+            </Border.StrokeShape>
+
+            <VerticalStackLayout Spacing="20">
+
+                <!-- Tiêu đề -->
+                <Label Text="Đăng nhập"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="Black"
+                       Margin="0,0,0,20"/>
+
+                <!-- Username -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Email hoặc Username"
+                           FontSize="14"
+                           TextColor="#666"/>
+                    <Border StrokeThickness="1"
+                            Stroke="#E0E0E0"
+                            BackgroundColor="White"
+                            Padding="15,12">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8"/>
+                        </Border.StrokeShape>
+                        <Entry
+                               Placeholder="Nhập email hoặc tên đăng nhập"
+                               FontSize="16"
+                               TextColor="Black"
+                               Text="{Binding Form.UserName}" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Password -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Mật khẩu"
+                           FontSize="14"
+                           TextColor="#666"/>
+                    <Border StrokeThickness="1"
+                            Stroke="#E0E0E0"
+                            BackgroundColor="White"
+                            Padding="15,12">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8"/>
+                        </Border.StrokeShape>
+                        <Entry
+                               Placeholder="Nhập mật khẩu"
+                               IsPassword="True"
+                               FontSize="16"
+                               TextColor="Black"
+                               Text="{Binding Form.Password}" />
+                    </Border>
+
+                    <!-- Quên mật khẩu -->
+                    <Label Text="Quên mật khẩu?"
+                           FontSize="14"
+                           TextColor="#007AFF"
+                           HorizontalOptions="End"
+                           Margin="0,5,0,0">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </VerticalStackLayout>
+
+                <!-- Nút đăng nhập -->
+                <Button Text="Đăng nhập"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        HeightRequest="50"
+                        Margin="0,10,0,0"
+                        Command="{Binding LoginCommand}">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#7B68EE" Offset="0.0"/>
+                            <GradientStop Color="#4A90E2" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+
+                <!-- Đăng ký -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="5" Margin="0,10,0,0">
+                    <Label Text="Bạn chưa có tài khoản?"
+                           FontSize="14"
+                           TextColor="#666"
+                           VerticalOptions="Center"/>
+                    <Label Text="Đăng ký tại đây"
+                           FontSize="14"
+                           TextColor="#007AFF"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RegisterCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+
+                <!-- Nút quay lại -->
+                <Button Text="← Quay lại"
+                        FontSize="16"
+                        TextColor="White"
+                        HeightRequest="50"
+                        Margin="0,20,0,0"
+                        Command="{Binding BackCommand}">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#7B68EE" Offset="0.0"/>
+                            <GradientStop Color="#4A90E2" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+
+            </VerticalStackLayout>
+        </Border>
+
+    </Grid>
+</ContentPage>

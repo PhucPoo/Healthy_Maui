@@ -1,15 +1,15 @@
-﻿namespace Heathy_Maui
+﻿using Healthy_MAUI.Views.Home;
+
+namespace Heathy_Maui
 {
     public partial class App : Application
     {
-        public App()
+        public App(MainPage mainPage)
         {
             InitializeComponent();
+            MainPage = mainPage;
+            
         }
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new AppShell());
-        }
     }
 }

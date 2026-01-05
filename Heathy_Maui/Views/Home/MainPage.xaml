@@ -1,0 +1,451 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Healthy_MAUI.Views.Home.MainPage"
+             BackgroundColor="#F9FAFB">
+
+    <Grid RowDefinitions="60,*,70">
+
+        <!-- Header / AppShell -->
+        <Grid Grid.Row="0" BackgroundColor="White" Padding="15,0">
+            <Grid.Shadow>
+                <Shadow Brush="Black" Opacity="0.1" Radius="10" Offset="0,2"/>
+            </Grid.Shadow>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Logo  -->
+            <HorizontalStackLayout
+                       Spacing="8"
+                       VerticalOptions="Center">
+
+                <!-- Logo trong Border -->
+                <Border WidthRequest="50"
+                        HeightRequest="50"
+                        StrokeThickness="0"
+                        VerticalOptions="Center">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="0"/>
+                    </Border.StrokeShape>
+
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#3B82F6" Offset="0.0"/>
+                            <GradientStop Color="#A855F7" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+
+                    <Image Source="logo.jpg"
+                            WidthRequest="50"
+                            HeightRequest="50"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
+                </Border>
+
+                <!-- Text bên phải logo -->
+                <Label Text="Healthy App"
+                        TextColor="Black"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        VerticalTextAlignment="Center"/>
+            </HorizontalStackLayout>
+
+            <!-- Login/Avatar Button -->
+            <!-- Login/Avatar Button -->
+            <Button Grid.Column="2"
+                    Text="{Binding LoginButtonText}"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    HeightRequest="44"
+                    WidthRequest="100"
+                    CornerRadius="12"
+                    BackgroundColor="#2563EB"
+                    TextColor="White"
+                    Shadow="{Shadow Brush=Black, Offset='2,0', Radius=8, Opacity=0.3}"
+                    IsVisible="{Binding IsLoginButtonVisible}"
+                    Command="{Binding Login}" />
+
+            <Border Grid.Column="2"
+                    IsVisible="{Binding IsAvatarVisible}"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    StrokeThickness="0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20"/>
+                </Border.StrokeShape>
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#3B82F6" Offset="0.0"/>
+                        <GradientStop Color="#A855F7" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Label Text="{Binding AvatarText}" 
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"/>
+            </Border>
+
+        </Grid>
+
+        <!-- Main Content with ScrollView -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="15" Padding="15">
+
+                <!-- Banner Quảng Cáo -->
+                <Border StrokeThickness="0"
+                        HeightRequest="180"
+                        Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+
+                    <Grid x:Name="BannerGrid">
+                        <Border x:Name="Banner1" StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="15"/>
+                            </Border.StrokeShape>
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#60A5FA" Offset="0.0"/>
+                                    <GradientStop Color="#2563EB" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Label Text="Chăm sóc sức khỏe mỗi ngày"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                                   Padding="20"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   HorizontalTextAlignment="Center"/>
+                        </Border>
+
+                        <Border x:Name="Banner2" StrokeThickness="0" Opacity="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="15"/>
+                            </Border.StrokeShape>
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#4ADE80" Offset="0.0"/>
+                                    <GradientStop Color="#16A34A" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Label Text="Ăn uống lành mạnh, sống vui khỏe"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                                   Padding="20"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   HorizontalTextAlignment="Center"/>
+                        </Border>
+
+                        <Border x:Name="Banner3" StrokeThickness="0" Opacity="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="15"/>
+                            </Border.StrokeShape>
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#C084FC" Offset="0.0"/>
+                                    <GradientStop Color="#9333EA" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Label Text="Tập luyện đều đặn, cơ thể dẻo dai"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                                   Padding="20"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   HorizontalTextAlignment="Center"/>
+                        </Border>
+
+                        <!-- Banner Indicators -->
+                        <HorizontalStackLayout HorizontalOptions="Center" 
+                                             VerticalOptions="End" 
+                                             Spacing="8"
+                                             Margin="0,0,0,15">
+                            <BoxView x:Name="Indicator1" WidthRequest="24" HeightRequest="8" CornerRadius="4" Color="White"/>
+                            <BoxView x:Name="Indicator2" WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="White" Opacity="0.5"/>
+                            <BoxView x:Name="Indicator3" WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="White" Opacity="0.5"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Border>
+
+
+                <!-- 4 Health Features Grid -->
+                <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" ColumnSpacing="15" RowSpacing="15">
+
+                    <!-- Gợi Ý Thức Ăn -->
+                    <Border Grid.Row="0" Grid.Column="0" 
+                    BackgroundColor="White"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FoodCommand}" />
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="10">
+                            <Border WidthRequest="56" 
+                            HeightRequest="56" 
+                            BackgroundColor="#F97316"
+                            StrokeThickness="0"
+                            HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="28"/>
+                                </Border.StrokeShape>
+                                <Label Text="🍽️" FontSize="28" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="Gợi Ý Thức Ăn" 
+                           FontSize="16" 
+                           FontAttributes="Bold"
+                           TextColor="#1F2937"
+                           HorizontalOptions="Center"/>
+                            <Label Text="Thực đơn dinh dưỡng" 
+                           FontSize="11" 
+                           TextColor="#6B7280"
+                           HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Gợi Ý Bài Tập -->
+                    <Border Grid.Row="0" Grid.Column="1" 
+                    BackgroundColor="White"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ExerciseCommand}" />
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="10">
+                            <Border WidthRequest="56" 
+                            HeightRequest="56" 
+                            BackgroundColor="#EF4444"
+                            StrokeThickness="0"
+                            HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="28"/>
+                                </Border.StrokeShape>
+                                <Label Text="💪" FontSize="28" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="Gợi Ý Bài Tập" 
+                           FontSize="16" 
+                           FontAttributes="Bold"
+                           TextColor="#1F2937"
+                           HorizontalOptions="Center"/>
+                            <Label Text="Luyện tập hàng ngày" 
+                           FontSize="11" 
+                           TextColor="#6B7280"
+                           HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Giấc Ngủ -->
+                    <Border Grid.Row="1" Grid.Column="0" 
+                    BackgroundColor="White"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SleepCommand}" />
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="10">
+                            <Border WidthRequest="56" 
+                            HeightRequest="56" 
+                            BackgroundColor="#6366F1"
+                            StrokeThickness="0"
+                            HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="28"/>
+                                </Border.StrokeShape>
+                                <Label Text="🌙" FontSize="28" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="Giấc Ngủ" 
+                           FontSize="16" 
+                           FontAttributes="Bold"
+                           TextColor="#1F2937"
+                           HorizontalOptions="Center"/>
+                            <Label Text="Theo dõi giấc ngủ" 
+                           FontSize="11" 
+                           TextColor="#6B7280"
+                           HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Hồ Sơ Sức Khỏe -->
+                    <Border Grid.Row="1" Grid.Column="1" 
+                    BackgroundColor="White"
+                    StrokeThickness="0"
+                    Padding="20"
+                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding HealthRecordCommand}" />
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="10">
+                            <Border WidthRequest="56" 
+                            HeightRequest="56" 
+                            BackgroundColor="#14B8A6"
+                            StrokeThickness="0"
+                            HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="28"/>
+                                </Border.StrokeShape>
+                                <Label Text="📋" FontSize="28" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="Hồ Sơ Sức Khỏe" 
+                           FontSize="16" 
+                           FontAttributes="Bold"
+                           TextColor="#1F2937"
+                           HorizontalOptions="Center"/>
+                            <Label Text="Lịch sử sức khỏe" 
+                           FontSize="11" 
+                           TextColor="#6B7280"
+                           HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Quick Stats -->
+                <Border BackgroundColor="White"
+                StrokeThickness="0"
+                Padding="20"
+                Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="Thống Kê Hôm Nay" 
+                       FontSize="18" 
+                       FontAttributes="Bold"
+                       TextColor="#1F2937"/>
+
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                            <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                <Label Text="1,234" 
+                               FontSize="24" 
+                               FontAttributes="Bold"
+                               TextColor="#2563EB"
+                               HorizontalOptions="Center"/>
+                                <Label Text="Bước chân" 
+                               FontSize="11" 
+                               TextColor="#6B7280"
+                               HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                <Label Text="450" 
+                               FontSize="24" 
+                               FontAttributes="Bold"
+                               TextColor="#16A34A"
+                               HorizontalOptions="Center"/>
+                                <Label Text="Calo" 
+                               FontSize="11" 
+                               TextColor="#6B7280"
+                               HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="2" Spacing="5">
+                                <Label Text="7.5h" 
+                               FontSize="24" 
+                               FontAttributes="Bold"
+                               TextColor="#9333EA"
+                               HorizontalOptions="Center"/>
+                                <Label Text="Giấc ngủ" 
+                               FontSize="11" 
+                               TextColor="#6B7280"
+                               HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Footer Navigation -->
+                <Grid BackgroundColor="White" ColumnDefinitions="*,*,*,*" Padding="0,8" >
+                    <Grid.Shadow>
+                        <Shadow Brush="Black" Opacity="0.1" Radius="10" Offset="0,-2"/>
+                    </Grid.Shadow>
+
+                    <!-- Trang Chủ -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding HomeCommand}"/>
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Label Text="🏠" FontSize="24" HorizontalOptions="Center"/>
+                        <Label Text="Trang Chủ" 
+                       FontSize="11" 
+                       FontAttributes="Bold"
+                       TextColor="#2563EB" 
+                       HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Hoạt Động -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ActivityCommand}"/>
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Label Text="📊" FontSize="24" HorizontalOptions="Center"/>
+                        <Label Text="Hoạt Động" 
+                       FontSize="11" 
+                       TextColor="#9CA3AF" 
+                       HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Lịch Trình -->
+                    <VerticalStackLayout Grid.Column="2" Spacing="4">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CalendarCommand}"/>
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Label Text="📅" FontSize="24" HorizontalOptions="Center"/>
+                        <Label Text="Lịch Trình" 
+                       FontSize="11" 
+                       TextColor="#9CA3AF" 
+                       HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Cài Đặt -->
+                    <VerticalStackLayout Grid.Column="3" Spacing="4">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SettingsCommand}"/>
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Label Text="⚙️" FontSize="24" HorizontalOptions="Center"/>
+                        <Label Text="Cài Đặt" 
+                       FontSize="11" 
+                       TextColor="#9CA3AF" 
+                       HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+
+
+    </Grid>
+</ContentPage>
