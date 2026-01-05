@@ -3,12 +3,17 @@
     x:Class="Heathy_Maui.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Healthy_MAUI.Views.Home"
+    xmlns:home="clr-namespace:Healthy_MAUI.Views.Home"
+    xmlns:l="clr-namespace:Healthy_MAUI.Views.Auth"
     Title="Heathy_Maui">
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
+        ContentTemplate="{DataTemplate home:MainPage}"
         Route="MainPage" />
+    <ShellContent
+        Title="LoginPage"
+        ContentTemplate="{DataTemplate l:LoginPage}"
+        Route="LoginPage" />
 
 </Shell>

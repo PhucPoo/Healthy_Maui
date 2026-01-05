@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Healthy_MAUI.Views.Home.MainPage"
-             BackgroundColor="#F9FAFB">
+             BackgroundColor="#F9FAFB"
+             Shell.NavBarIsVisible="False">
 
     <Grid RowDefinitions="60,*,70">
 
@@ -56,7 +57,6 @@
             </HorizontalStackLayout>
 
             <!-- Login/Avatar Button -->
-            <!-- Login/Avatar Button -->
             <Button Grid.Column="2"
                     Text="{Binding LoginButtonText}"
                     FontSize="12"
@@ -68,7 +68,7 @@
                     TextColor="White"
                     Shadow="{Shadow Brush=Black, Offset='2,0', Radius=8, Opacity=0.3}"
                     IsVisible="{Binding IsLoginButtonVisible}"
-                    Command="{Binding Login}" />
+                    Command="{Binding LoginCommand}" />
 
             <Border Grid.Column="2"
                     IsVisible="{Binding IsAvatarVisible}"

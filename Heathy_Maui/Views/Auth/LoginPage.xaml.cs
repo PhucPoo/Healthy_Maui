@@ -1,13 +1,13 @@
-﻿//using HealthManagement_MAUI.Features.Auth;
+﻿using Healthy_MAUI.ViewModels;
 
-//namespace HealthManagement_MAUI.Features.Auth
-//{
-//    public partial class LoginPage : ContentPage
-//    {
-//        public LoginPage(LoginPageViewModel vm)
-//        {
-//            InitializeComponent();
-//            BindingContext = vm;
-//        }
-//    }
-//}
+namespace Healthy_MAUI.Views.Auth
+{
+    public partial class LoginPage : ContentPage
+    {
+        public LoginPage(LoginPageViewModel vm)
+        {
+            InitializeComponent();
+            BindingContext = vm;
+        }
+    }
+}

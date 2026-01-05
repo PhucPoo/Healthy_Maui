@@ -1,60 +1,80 @@
-﻿//using CommunityToolkit.Mvvm.Input;
-//using HealthManagement_MAUI.Models.Entities.AuthModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Healthy_MAUI.Models.Entities.AuthModel;
+using Heathy_Maui.Data.Interface;
+using Microsoft.Maui.Controls;
 
-//namespace HealthManagement_MAUI.Features.Auth
-//{
-//    public partial class LoginPageViewModel : BaseViewModel
-//    {
-//        private readonly IAccountRepository _accountRepository;
-//        private readonly IDialogService _dialogService;
+namespace Healthy_MAUI.Views.Auth
+{
+    public partial class LoginPageViewModel : ObservableObject
+    {
+        private readonly IAccountRepository _accountRepository;
 
-//        public LoginFormModel Form { get; } = new();
+        // Property bind vào Label hiển thị lỗi
+        [ObservableProperty]
+        private string errorMessage = string.Empty;
 
-//        public LoginPageViewModel(IAccountRepository accountRepository, IAppNavigator appNavigator)
-//            : base(appNavigator)
-//        {
-//            _accountRepository = accountRepository;
-//        }
+        public LoginFormModel Form { get; } = new();
 
-//        [RelayCommand]
-//        private async Task LoginAsync()
-//        {
-//            if (!Form.IsValid())
-//                return;
+        public LoginPageViewModel(IAccountRepository accountRepository)
+        {
+            _accountRepository = accountRepository;
+        }
 
-//            var isValid = await _accountRepository.ValidateCredentialsAsync(
-//                Form.UserName.Trim(),
-//                Form.Password);
+        [RelayCommand]
+        private async Task LoginAsync()
+        {
+            ErrorMessage = string.Empty;
 
-//            if (!isValid)
-//            {
-//                await _dialogService.ShowAlert("Lỗi", "Sai tài khoản hoặc mật khẩu", "OK");
-//                return;
-//            }
+            if (!Form.IsValid())
+                return;
 
-//            var account = await _accountRepository.GetAccountByUsernameAsync(Form.UserName.Trim());
+            // Kiểm tra thông tin đăng nhập
+            var isValid = await _accountRepository.ValidateCredentialsAsync(
+                Form.UserName.Trim(),
+                Form.Password);
 
-//            if (account == null)
-//            {
-//                await _dialogService.ShowAlert("Lỗi", "Không tìm thấy tài khoản", "OK");
-//                return;
-//            }
+            if (!isValid)
+            {
+                ErrorMessage = "Sai tài khoản hoặc mật khẩu";
+                return;
+            }
 
-//            Preferences.Set("IsLoggedIn", true);
-//            Preferences.Set("AccountId", account.Id);
-//            Preferences.Set("Username", account.Username);
-//            Preferences.Set("Email", account.Email);
-//            Preferences.Set("Role", account.Role?.RoleName);
+            var account = await _accountRepository.GetAccountByUsernameAsync(Form.UserName.Trim());
 
-//            await GoHomeAsync();
-//        }
+            if (account == null)
+            {
+                ErrorMessage = "Không tìm thấy tài khoản";
+                return;
+            }
 
-//        [RelayCommand]
-//        private Task RegisterAsync() => AppNavigator.NavigateAsync(AppRoutes.RegisterPage);
+            // Lưu thông tin đăng nhập
+            Preferences.Set("IsLoggedIn", true);
+            Preferences.Set("AccountId", account.Id);
+            Preferences.Set("Username", account.Username);
+            Preferences.Set("Email", account.Email);
+            Preferences.Set("Role", account.Role?.RoleName);
 
-//        [RelayCommand]
-//        private Task ForgotPasswordAsync() => AppNavigator.NavigateAsync(AppRoutes.ForgotPassword);
+            // Navigate tới Home
+            await GoHomeAsync();
+        }
 
-//        private Task GoHomeAsync() => AppNavigator.NavigateAsync(AppRoutes.Home);
-//    }
-//}
+        [RelayCommand]
+        private async Task RegisterAsync()
+        {
+            await Shell.Current.GoToAsync("register");
+        }
+
+        [RelayCommand]
+        private async Task ForgotPasswordAsync()
+        {
+            await Shell.Current.GoToAsync("forgotpassword");
+        }
+
+        // Phương thức riêng để navigate Home
+        private async Task GoHomeAsync()
+        {
+            await Shell.Current.GoToAsync("//home");
+        }
+    }
+}

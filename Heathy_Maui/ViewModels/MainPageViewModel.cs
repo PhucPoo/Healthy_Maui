@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace Healthy_MAUI.ViewModels;
@@ -91,21 +89,34 @@ public partial class MainPageViewModel : ObservableObject
     }
     private async Task ShowToast(string message)
     {
-        var cancellationTokenSource = new CancellationTokenSource();
-        var toast = Toast.Make(message, ToastDuration.Short);
-        await toast.Show(cancellationTokenSource.Token);
+        await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            var toast = CommunityToolkit.Maui.Alerts.Toast.Make(message, CommunityToolkit.Maui.Core.ToastDuration.Short);
+            await toast.Show();
+        });
     }
+
     #endregion
 
     #region Commands
     [RelayCommand]
     private async Task Login()
     {
-        IsLoggedIn = !IsLoggedIn;
-        IsLoginButtonVisible = !IsLoggedIn;
-        IsAvatarVisible = IsLoggedIn;
-
-        await ShowToast(IsLoggedIn ? "Đã đăng nhập" : "Đã đăng xuất");
+        {
+            if (!IsLoggedIn)
+            {
+                // Chưa login, navigate tới LoginPage
+                await Shell.Current.GoToAsync("LoginPage");
+            }
+            else
+            {
+                // Đã login → toggle logout
+                IsLoggedIn = false;
+                IsLoginButtonVisible = true;
+                IsAvatarVisible = false;
+                await ShowToast("Đã đăng xuất");
+            }
+        }
     }
 
     [RelayCommand]
