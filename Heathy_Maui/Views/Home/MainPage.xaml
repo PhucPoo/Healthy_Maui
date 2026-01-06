@@ -20,40 +20,32 @@
             </Grid.ColumnDefinitions>
 
             <!-- Logo  -->
-            <HorizontalStackLayout
-                       Spacing="8"
-                       VerticalOptions="Center">
-
-                <!-- Logo trong Border -->
+            <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
                 <Border WidthRequest="50"
                         HeightRequest="50"
                         StrokeThickness="0"
                         VerticalOptions="Center">
-
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="0"/>
                     </Border.StrokeShape>
-
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                             <GradientStop Color="#3B82F6" Offset="0.0"/>
                             <GradientStop Color="#A855F7" Offset="1.0"/>
                         </LinearGradientBrush>
                     </Border.Background>
-
                     <Image Source="logo.jpg"
-                            WidthRequest="50"
-                            HeightRequest="50"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"/>
+                           WidthRequest="50"
+                           HeightRequest="50"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
                 </Border>
 
-                <!-- Text bên phải logo -->
                 <Label Text="Healthy App"
-                        TextColor="Black"
-                        FontSize="16"
-                        FontAttributes="Bold"
-                        VerticalTextAlignment="Center"/>
+                       TextColor="Black"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       VerticalTextAlignment="Center"/>
             </HorizontalStackLayout>
 
             <!-- Login/Avatar Button -->
@@ -71,12 +63,16 @@
                     Command="{Binding LoginCommand}" />
 
             <Border Grid.Column="2"
+                    x:Name="AvatarBorder"
                     IsVisible="{Binding IsAvatarVisible}"
                     WidthRequest="40"
                     HeightRequest="40"
                     StrokeThickness="0"
                     HorizontalOptions="Center"
                     VerticalOptions="Center">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LoginCommand}" />
+                </Border.GestureRecognizers>
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="20"/>
                 </Border.StrokeShape>
@@ -86,14 +82,28 @@
                         <GradientStop Color="#A855F7" Offset="1.0"/>
                     </LinearGradientBrush>
                 </Border.Background>
-                <Label Text="{Binding AvatarText}" 
-                        FontSize="18"
-                        FontAttributes="Bold"
-                        TextColor="White"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"/>
-            </Border>
 
+                <Grid>
+                    <!-- Avatar Image (nếu có) -->
+                    <Image x:Name="AvatarImage"
+                           Source="{Binding AvatarUrl}"
+                           WidthRequest="40"
+                           HeightRequest="40"
+                           Aspect="AspectFill"
+                           IsVisible="{Binding HasAvatarImage}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+
+                    <!-- Avatar Text (nếu không có ảnh) -->
+                    <Label Text="{Binding AvatarText}" 
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           IsVisible="{Binding HasNoAvatarImage}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Grid>
+            </Border>
         </Grid>
 
         <!-- Main Content with ScrollView -->
@@ -181,16 +191,15 @@
                     </Grid>
                 </Border>
 
-
                 <!-- 4 Health Features Grid -->
                 <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" ColumnSpacing="15" RowSpacing="15">
 
                     <!-- Gợi Ý Thức Ăn -->
                     <Border Grid.Row="0" Grid.Column="0" 
-                    BackgroundColor="White"
-                    StrokeThickness="0"
-                    Padding="20"
-                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                            BackgroundColor="White"
+                            StrokeThickness="0"
+                            Padding="20"
+                            Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="15"/>
                         </Border.StrokeShape>
@@ -199,35 +208,35 @@
                         </Border.GestureRecognizers>
                         <VerticalStackLayout Spacing="10">
                             <Border WidthRequest="56" 
-                            HeightRequest="56" 
-                            BackgroundColor="#F97316"
-                            StrokeThickness="0"
-                            HorizontalOptions="Center">
+                                    HeightRequest="56" 
+                                    BackgroundColor="#F97316"
+                                    StrokeThickness="0"
+                                    HorizontalOptions="Center">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="28"/>
                                 </Border.StrokeShape>
                                 <Label Text="🍽️" FontSize="28" 
-                               HorizontalOptions="Center" 
-                               VerticalOptions="Center"/>
+                                       HorizontalOptions="Center" 
+                                       VerticalOptions="Center"/>
                             </Border>
                             <Label Text="Gợi Ý Thức Ăn" 
-                           FontSize="16" 
-                           FontAttributes="Bold"
-                           TextColor="#1F2937"
-                           HorizontalOptions="Center"/>
+                                   FontSize="16" 
+                                   FontAttributes="Bold"
+                                   TextColor="#1F2937"
+                                   HorizontalOptions="Center"/>
                             <Label Text="Thực đơn dinh dưỡng" 
-                           FontSize="11" 
-                           TextColor="#6B7280"
-                           HorizontalOptions="Center"/>
+                                   FontSize="11" 
+                                   TextColor="#6B7280"
+                                   HorizontalOptions="Center"/>
                         </VerticalStackLayout>
                     </Border>
 
                     <!-- Gợi Ý Bài Tập -->
                     <Border Grid.Row="0" Grid.Column="1" 
-                    BackgroundColor="White"
-                    StrokeThickness="0"
-                    Padding="20"
-                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                            BackgroundColor="White"
+                            StrokeThickness="0"
+                            Padding="20"
+                            Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="15"/>
                         </Border.StrokeShape>
@@ -236,35 +245,35 @@
                         </Border.GestureRecognizers>
                         <VerticalStackLayout Spacing="10">
                             <Border WidthRequest="56" 
-                            HeightRequest="56" 
-                            BackgroundColor="#EF4444"
-                            StrokeThickness="0"
-                            HorizontalOptions="Center">
+                                    HeightRequest="56" 
+                                    BackgroundColor="#EF4444"
+                                    StrokeThickness="0"
+                                    HorizontalOptions="Center">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="28"/>
                                 </Border.StrokeShape>
                                 <Label Text="💪" FontSize="28" 
-                               HorizontalOptions="Center" 
-                               VerticalOptions="Center"/>
+                                       HorizontalOptions="Center" 
+                                       VerticalOptions="Center"/>
                             </Border>
                             <Label Text="Gợi Ý Bài Tập" 
-                           FontSize="16" 
-                           FontAttributes="Bold"
-                           TextColor="#1F2937"
-                           HorizontalOptions="Center"/>
+                                   FontSize="16" 
+                                   FontAttributes="Bold"
+                                   TextColor="#1F2937"
+                                   HorizontalOptions="Center"/>
                             <Label Text="Luyện tập hàng ngày" 
-                           FontSize="11" 
-                           TextColor="#6B7280"
-                           HorizontalOptions="Center"/>
+                                   FontSize="11" 
+                                   TextColor="#6B7280"
+                                   HorizontalOptions="Center"/>
                         </VerticalStackLayout>
                     </Border>
 
                     <!-- Giấc Ngủ -->
                     <Border Grid.Row="1" Grid.Column="0" 
-                    BackgroundColor="White"
-                    StrokeThickness="0"
-                    Padding="20"
-                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                            BackgroundColor="White"
+                            StrokeThickness="0"
+                            Padding="20"
+                            Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="15"/>
                         </Border.StrokeShape>
@@ -273,35 +282,35 @@
                         </Border.GestureRecognizers>
                         <VerticalStackLayout Spacing="10">
                             <Border WidthRequest="56" 
-                            HeightRequest="56" 
-                            BackgroundColor="#6366F1"
-                            StrokeThickness="0"
-                            HorizontalOptions="Center">
+                                    HeightRequest="56" 
+                                    BackgroundColor="#6366F1"
+                                    StrokeThickness="0"
+                                    HorizontalOptions="Center">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="28"/>
                                 </Border.StrokeShape>
                                 <Label Text="🌙" FontSize="28" 
-                               HorizontalOptions="Center" 
-                               VerticalOptions="Center"/>
+                                       HorizontalOptions="Center" 
+                                       VerticalOptions="Center"/>
                             </Border>
                             <Label Text="Giấc Ngủ" 
-                           FontSize="16" 
-                           FontAttributes="Bold"
-                           TextColor="#1F2937"
-                           HorizontalOptions="Center"/>
+                                   FontSize="16" 
+                                   FontAttributes="Bold"
+                                   TextColor="#1F2937"
+                                   HorizontalOptions="Center"/>
                             <Label Text="Theo dõi giấc ngủ" 
-                           FontSize="11" 
-                           TextColor="#6B7280"
-                           HorizontalOptions="Center"/>
+                                   FontSize="11" 
+                                   TextColor="#6B7280"
+                                   HorizontalOptions="Center"/>
                         </VerticalStackLayout>
                     </Border>
 
                     <!-- Hồ Sơ Sức Khỏe -->
                     <Border Grid.Row="1" Grid.Column="1" 
-                    BackgroundColor="White"
-                    StrokeThickness="0"
-                    Padding="20"
-                    Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                            BackgroundColor="White"
+                            StrokeThickness="0"
+                            Padding="20"
+                            Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="15"/>
                         </Border.StrokeShape>
@@ -310,142 +319,142 @@
                         </Border.GestureRecognizers>
                         <VerticalStackLayout Spacing="10">
                             <Border WidthRequest="56" 
-                            HeightRequest="56" 
-                            BackgroundColor="#14B8A6"
-                            StrokeThickness="0"
-                            HorizontalOptions="Center">
+                                    HeightRequest="56" 
+                                    BackgroundColor="#14B8A6"
+                                    StrokeThickness="0"
+                                    HorizontalOptions="Center">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="28"/>
                                 </Border.StrokeShape>
                                 <Label Text="📋" FontSize="28" 
-                               HorizontalOptions="Center" 
-                               VerticalOptions="Center"/>
+                                       HorizontalOptions="Center" 
+                                       VerticalOptions="Center"/>
                             </Border>
                             <Label Text="Hồ Sơ Sức Khỏe" 
-                           FontSize="16" 
-                           FontAttributes="Bold"
-                           TextColor="#1F2937"
-                           HorizontalOptions="Center"/>
+                                   FontSize="16" 
+                                   FontAttributes="Bold"
+                                   TextColor="#1F2937"
+                                   HorizontalOptions="Center"/>
                             <Label Text="Lịch sử sức khỏe" 
-                           FontSize="11" 
-                           TextColor="#6B7280"
-                           HorizontalOptions="Center"/>
+                                   FontSize="11" 
+                                   TextColor="#6B7280"
+                                   HorizontalOptions="Center"/>
                         </VerticalStackLayout>
                     </Border>
                 </Grid>
 
                 <!-- Quick Stats -->
                 <Border BackgroundColor="White"
-                StrokeThickness="0"
-                Padding="20"
-                Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
+                        StrokeThickness="0"
+                        Padding="20"
+                        Shadow="{Shadow Brush=Black, Opacity=0.1, Radius=10, Offset='0,2'}">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <VerticalStackLayout Spacing="15">
                         <Label Text="Thống Kê Hôm Nay" 
-                       FontSize="18" 
-                       FontAttributes="Bold"
-                       TextColor="#1F2937"/>
+                               FontSize="18" 
+                               FontAttributes="Bold"
+                               TextColor="#1F2937"/>
 
                         <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
                             <VerticalStackLayout Grid.Column="0" Spacing="5">
                                 <Label Text="1,234" 
-                               FontSize="24" 
-                               FontAttributes="Bold"
-                               TextColor="#2563EB"
-                               HorizontalOptions="Center"/>
+                                       FontSize="24" 
+                                       FontAttributes="Bold"
+                                       TextColor="#2563EB"
+                                       HorizontalOptions="Center"/>
                                 <Label Text="Bước chân" 
-                               FontSize="11" 
-                               TextColor="#6B7280"
-                               HorizontalOptions="Center"/>
+                                       FontSize="11" 
+                                       TextColor="#6B7280"
+                                       HorizontalOptions="Center"/>
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Column="1" Spacing="5">
                                 <Label Text="450" 
-                               FontSize="24" 
-                               FontAttributes="Bold"
-                               TextColor="#16A34A"
-                               HorizontalOptions="Center"/>
+                                       FontSize="24" 
+                                       FontAttributes="Bold"
+                                       TextColor="#16A34A"
+                                       HorizontalOptions="Center"/>
                                 <Label Text="Calo" 
-                               FontSize="11" 
-                               TextColor="#6B7280"
-                               HorizontalOptions="Center"/>
+                                       FontSize="11" 
+                                       TextColor="#6B7280"
+                                       HorizontalOptions="Center"/>
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Column="2" Spacing="5">
                                 <Label Text="7.5h" 
-                               FontSize="24" 
-                               FontAttributes="Bold"
-                               TextColor="#9333EA"
-                               HorizontalOptions="Center"/>
+                                       FontSize="24" 
+                                       FontAttributes="Bold"
+                                       TextColor="#9333EA"
+                                       HorizontalOptions="Center"/>
                                 <Label Text="Giấc ngủ" 
-                               FontSize="11" 
-                               TextColor="#6B7280"
-                               HorizontalOptions="Center"/>
+                                       FontSize="11" 
+                                       TextColor="#6B7280"
+                                       HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- Footer Navigation -->
-                <Grid BackgroundColor="White" ColumnDefinitions="*,*,*,*" Padding="0,8" >
-                    <Grid.Shadow>
-                        <Shadow Brush="Black" Opacity="0.1" Radius="10" Offset="0,-2"/>
-                    </Grid.Shadow>
+            </VerticalStackLayout>
+        </ScrollView>
 
-                    <!-- Trang Chủ -->
-                    <VerticalStackLayout Grid.Column="0" Spacing="4">
-                        <VerticalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding HomeCommand}"/>
-                        </VerticalStackLayout.GestureRecognizers>
-                        <Label Text="🏠" FontSize="24" HorizontalOptions="Center"/>
-                        <Label Text="Trang Chủ" 
+        <!-- Footer Navigation - Đã được di chuyển ra ngoài ScrollView -->
+        <Grid Grid.Row="2" BackgroundColor="White" ColumnDefinitions="*,*,*,*" Padding="0,8">
+            <Grid.Shadow>
+                <Shadow Brush="Black" Opacity="0.1" Radius="10" Offset="0,-2"/>
+            </Grid.Shadow>
+
+            <!-- Trang Chủ -->
+            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding HomeCommand}"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Label Text="🏠" FontSize="24" HorizontalOptions="Center"/>
+                <Label Text="Trang Chủ" 
                        FontSize="11" 
                        FontAttributes="Bold"
                        TextColor="#2563EB" 
                        HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-
-                    <!-- Hoạt Động -->
-                    <VerticalStackLayout Grid.Column="1" Spacing="4">
-                        <VerticalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding ActivityCommand}"/>
-                        </VerticalStackLayout.GestureRecognizers>
-                        <Label Text="📊" FontSize="24" HorizontalOptions="Center"/>
-                        <Label Text="Hoạt Động" 
-                       FontSize="11" 
-                       TextColor="#9CA3AF" 
-                       HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-
-                    <!-- Lịch Trình -->
-                    <VerticalStackLayout Grid.Column="2" Spacing="4">
-                        <VerticalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding CalendarCommand}"/>
-                        </VerticalStackLayout.GestureRecognizers>
-                        <Label Text="📅" FontSize="24" HorizontalOptions="Center"/>
-                        <Label Text="Lịch Trình" 
-                       FontSize="11" 
-                       TextColor="#9CA3AF" 
-                       HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-
-                    <!-- Cài Đặt -->
-                    <VerticalStackLayout Grid.Column="3" Spacing="4">
-                        <VerticalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SettingsCommand}"/>
-                        </VerticalStackLayout.GestureRecognizers>
-                        <Label Text="⚙️" FontSize="24" HorizontalOptions="Center"/>
-                        <Label Text="Cài Đặt" 
-                       FontSize="11" 
-                       TextColor="#9CA3AF" 
-                       HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-                </Grid>
             </VerticalStackLayout>
-        </ScrollView>
 
+            <!-- Hoạt Động -->
+            <VerticalStackLayout Grid.Column="1" Spacing="4">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ActivityCommand}"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Label Text="📊" FontSize="24" HorizontalOptions="Center"/>
+                <Label Text="Hoạt Động" 
+                       FontSize="11" 
+                       TextColor="#9CA3AF" 
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+            <!-- Lịch Trình -->
+            <VerticalStackLayout Grid.Column="2" Spacing="4">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CalendarCommand}"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Label Text="📅" FontSize="24" HorizontalOptions="Center"/>
+                <Label Text="Lịch Trình" 
+                       FontSize="11" 
+                       TextColor="#9CA3AF" 
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+            <!-- Cài Đặt -->
+            <VerticalStackLayout Grid.Column="3" Spacing="4">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SettingsCommand}"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Label Text="⚙️" FontSize="24" HorizontalOptions="Center"/>
+                <Label Text="Cài Đặt" 
+                       FontSize="11" 
+                       TextColor="#9CA3AF" 
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+        </Grid>
 
     </Grid>
 </ContentPage>

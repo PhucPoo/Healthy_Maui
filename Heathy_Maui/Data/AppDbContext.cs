@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Heathy_Maui.Data
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
        : base(options) { }
@@ -23,6 +23,35 @@ namespace Heathy_Maui.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Role>().HasData(
+                    new Role
+                    {
+                        Id = 1,
+                        RoleName = "Admin"
+                    },
+                    new Role
+                    {
+                        Id = 2,
+                        RoleName = "User"
+                    }
+                );
+
+            // ===== SEED ADMIN ACCOUNT =====
+            var adminPasswordHash = BCrypt.Net.BCrypt.HashPassword("admin");
+
+            modelBuilder.Entity<Account>().HasData(
+                new Account
+                {
+                    Id = 1,
+                    Username = "admin",
+                    Email = "admin@system.com",
+                    Password = adminPasswordHash,
+                    RoleId = 1,
+                    CreatedAt = DateTime.Now,
+                    isDeleted = false
+                }
+            );
 
             // Profile liên kết Account
             modelBuilder.Entity<AccountProfile>()

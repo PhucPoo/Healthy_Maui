@@ -1,4 +1,5 @@
-﻿using Healthy_MAUI.ViewModels;
+﻿
+using Healthy_MAUI.ViewModels;
 
 namespace Healthy_MAUI.Views.Auth
 {

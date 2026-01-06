@@ -193,5 +193,37 @@ namespace HealthManagement_MAUI.Data.Repositories
             return await _context.Accounts
                 .FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
         }
+        public async Task<Account> RegisterAsync(Account account)
+        {
+            try
+            {
+                if (await AccountExistsAsync(account.Username))
+                    throw new Exception("Username already exists");
+
+                if (await EmailExistsAsync(account.Email))
+                    throw new Exception("Email already exists");
+
+                account.Password = BCrypt.Net.BCrypt.HashPassword(account.Password);
+
+                account.CreatedAt = DateTime.Now;
+                account.isDeleted = false;
+
+               
+                account.RoleId = 2;
+
+                _context.Accounts.Add(account);
+                await _context.SaveChangesAsync();
+
+                _logger.LogInformation("New account registered: {Username}", account.Username);
+
+                return account;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while registering account");
+                throw;
+            }
+        }
+
     }
 }

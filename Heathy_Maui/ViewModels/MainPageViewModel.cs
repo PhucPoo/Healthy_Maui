@@ -1,11 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Heathy_Maui.Helpers;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Healthy_MAUI.ViewModels;
 
 public partial class MainPageViewModel : ObservableObject
 {
-
     #region Banner Properties
     [ObservableProperty]
     private int currentBannerIndex = 0;
@@ -56,12 +57,101 @@ public partial class MainPageViewModel : ObservableObject
     private string loginButtonText = "ĐĂNG NHẬP";
 
     [ObservableProperty]
-    private string avatarText = "A";
+    private string avatarText = "U";
+
+    [ObservableProperty]
+    private string userName = "";
+
+    [ObservableProperty]
+    private string avatarUrl = "";
+
+    [ObservableProperty]
+    private bool hasAvatarImage = false;
+
+    [ObservableProperty]
+    private bool hasNoAvatarImage = true;
     #endregion
 
     public MainPageViewModel()
     {
+        // Kiểm tra trạng thái đăng nhập khi khởi tạo
+        CheckLoginStatus();
+
+        // Đăng ký nhận message khi đăng nhập thành công
+        WeakReferenceMessenger.Default.Register<LoginMessage>(this, (r, m) =>
+        {
+            CheckLoginStatus();
+        });
     }
+
+    #region Login Status Management
+
+    /// <summary>
+    /// Kiểm tra trạng thái đăng nhập từ Preferences
+    /// </summary>
+    private void CheckLoginStatus()
+    {
+        IsLoggedIn = Preferences.Get("IsLoggedIn", false);
+
+        if (IsLoggedIn)
+        {
+            UserName = Preferences.Get("FullName", "User");
+            AvatarUrl = Preferences.Get("AvatarUrl", string.Empty);
+            UpdateUIAfterLogin(UserName, AvatarUrl);
+        }
+        else
+        {
+            // Reset về trạng thái chưa đăng nhập
+            IsLoginButtonVisible = true;
+            IsAvatarVisible = false;
+        }
+    }
+
+    /// <summary>
+    /// Cập nhật giao diện sau khi đăng nhập thành công
+    /// </summary>
+    public void UpdateUIAfterLogin(string userName, string avatarUrl = "")
+    {
+        IsLoggedIn = true;
+        UserName = userName;
+        AvatarUrl = avatarUrl;
+
+        // Kiểm tra có ảnh avatar không
+        HasAvatarImage = !string.IsNullOrEmpty(avatarUrl);
+        HasNoAvatarImage = string.IsNullOrEmpty(avatarUrl);
+
+        // Ẩn nút đăng nhập, hiển thị avatar
+        IsLoginButtonVisible = false;
+        IsAvatarVisible = true;
+
+        // Lấy ký tự đầu tiên của tên làm avatar text (nếu không có ảnh)
+        if (string.IsNullOrEmpty(avatarUrl))
+        {
+            AvatarText = string.IsNullOrEmpty(userName)
+                ? "U"
+                : userName.Trim().Substring(0, 1).ToUpper();
+        }
+    }
+
+    /// <summary>
+    /// Đăng xuất và reset giao diện
+    /// </summary>
+    private void Logout()
+    {
+        IsLoggedIn = false;
+        IsLoginButtonVisible = true;
+        IsAvatarVisible = false;
+        UserName = "";
+        AvatarText = "U";
+        AvatarUrl = "";
+
+        // Xóa tất cả thông tin đăng nhập
+        Preferences.Clear();
+
+        NotificationHelper.ShowNotification("Đã đăng xuất thành công!");
+    }
+
+    #endregion
 
     #region Banner Animation
     public void AnimateBanner()
@@ -87,69 +177,73 @@ public partial class MainPageViewModel : ObservableObject
     {
         bannerTimer?.Stop();
     }
-    private async Task ShowToast(string message)
-    {
-        await MainThread.InvokeOnMainThreadAsync(async () =>
-        {
-            var toast = CommunityToolkit.Maui.Alerts.Toast.Make(message, CommunityToolkit.Maui.Core.ToastDuration.Short);
-            await toast.Show();
-        });
-    }
-
     #endregion
 
     #region Commands
+
     [RelayCommand]
     private async Task Login()
     {
+        if (!IsLoggedIn)
         {
-            if (!IsLoggedIn)
+            // Chưa login, navigate tới LoginPage
+            await Shell.Current.GoToAsync("///LoginPage");
+        }
+        else
+        {
+            // Đã login → hiện menu với các tùy chọn
+            string fullName = Preferences.Get("FullName", "Người dùng");
+
+            var action = await Application.Current.MainPage.DisplayActionSheet(
+                fullName,
+                "Hủy",
+                null,
+                "Xem hồ sơ",
+                "Đăng xuất"
+            );
+
+            if (action == "Đăng xuất")
             {
-                // Chưa login, navigate tới LoginPage
-                await Shell.Current.GoToAsync("LoginPage");
+                Logout();
             }
-            else
+            else if (action == "Xem hồ sơ")
             {
-                // Đã login → toggle logout
-                IsLoggedIn = false;
-                IsLoginButtonVisible = true;
-                IsAvatarVisible = false;
-                await ShowToast("Đã đăng xuất");
+                await Shell.Current.GoToAsync("///ProfilePage");
             }
         }
     }
 
     [RelayCommand]
     private async Task Food() =>
-        await ShowToast("Gợi Ý Thức Ăn đang phát triển");
+        NotificationHelper.ShowNotification("Gợi Ý Thức Ăn đang phát triển");
 
     [RelayCommand]
     private async Task Exercise() =>
-        await ShowToast("Gợi Ý Bài Tập đang phát triển");
+        NotificationHelper.ShowNotification("Gợi Ý Bài Tập đang phát triển");
 
     [RelayCommand]
     private async Task Sleep() =>
-        await ShowToast("Giấc Ngủ đang phát triển");
+        NotificationHelper.ShowNotification("Giấc Ngủ đang phát triển");
 
     [RelayCommand]
     private async Task HealthRecord() =>
-        await ShowToast("Hồ Sơ Sức Khỏe đang phát triển");
+        NotificationHelper.ShowNotification("Hồ Sơ Sức Khỏe đang phát triển");
 
     [RelayCommand]
     private async Task Home() =>
-        await ShowToast("Bạn đang ở Trang Chủ");
+        NotificationHelper.ShowNotification("Bạn đang ở Trang Chủ");
 
     [RelayCommand]
     private async Task Activity() =>
-        await ShowToast("Hoạt Động đang phát triển");
+        NotificationHelper.ShowNotification("Hoạt Động đang phát triển");
 
     [RelayCommand]
     private async Task Calendar() =>
-        await ShowToast("Lịch Trình đang phát triển");
+        NotificationHelper.ShowNotification("Lịch Trình đang phát triển");
 
     [RelayCommand]
     private async Task Settings() =>
-        await ShowToast("Cài Đặt đang phát triển");
+        NotificationHelper.ShowNotification("Cài Đặt đang phát triển");
 
     #endregion
 }

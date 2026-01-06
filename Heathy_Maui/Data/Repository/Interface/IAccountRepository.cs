@@ -21,5 +21,6 @@ namespace Heathy_Maui.Data.Interface
         Task<bool> EmailExistsAsync(string email);
         Task UpdateAsync(Account Account);
         Task<Account?> GetAccountByRefreshTokenAsync(string refreshToken);
+        Task<Account> RegisterAsync(Account account);
     }
 }
